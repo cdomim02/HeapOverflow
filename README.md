@@ -174,7 +174,15 @@ info registers
 ```
 ![image](https://github.com/user-attachments/assets/38a0f883-0836-4244-b485-4b103762555c)
 
+¿Cómo podríamos aprovechar esto?
 
+Vamos a intentar ejecutar la función "fentrar" escribiendo la instrucción de inicio de esta donde debería empezar la función "fesperofuera". Para ello, primero veamos el código ensamblador de esta función con:
+```
+gdb -q ./heapexample
+(gdb) disass fentrar
+```
+
+![image](https://github.com/user-attachments/assets/17cdf647-e044-405c-96ba-a982fecbd9fa)
 
 
 
