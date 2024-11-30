@@ -116,9 +116,10 @@ Ahora veamos dentro de gdb que esta sucediendo (ejecutamos todos los pasos anter
 ```
 run $(program.1)
 ```
-![image](https://github.com/user-attachments/assets/d2586fc4-f675-4c9f-976e-a9986cb3b47a)
+y volvemos a analizar el heap:
+![image](https://github.com/user-attachments/assets/a34704fd-379a-45d8-b6a3-154d8f9c418b)
 
-Vemos el problema de segmentation fault pero con más detalle.
+Viendo que hemos sobreescrito la primera instrucción de fesperandofuera.
 
 ¿Y como podríamos aprovechar esto?
 
