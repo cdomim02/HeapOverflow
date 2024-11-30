@@ -140,7 +140,7 @@ print('X' * 70 + 'YAYBYCYDYEYFYG')
 De forma que deberíamos prestar especial atencion a la última parte de la cadena "YFYG" = 0x47594659. Vamos a ver donde se sobreescribe esto ejecutando:
 ```
 gdb -q ./heapexample
-(gdb) run $(./pp2)
+(gdb) run $(./program.2)
 ```
 Y analicemos la memoria en el heap:
 
@@ -155,10 +155,28 @@ info registers
 vemos que hemos sobreescrito el RIP con esta cadena:
 ![image](https://github.com/user-attachments/assets/32f202a6-1c07-4c59-8ab4-3aeb843ac220)
 
-¿C
-
+Ahora vamos a refinar esto un poco más con el siguiente programa de Python (observar que "CDEF" = 0x46454443):
 ```
 program.3:
 #!/usr/bin/python3
 print('X' * 80 + 'CDEF')
 ```
+Donde rellenamos los primeros registros de la misma forma siempre, ya que solo nos importa sobreescribir el registro RIP. De esta forma, repetimos los pasos anteriores y vemos que pasa en el heap:
+```
+gdb -q ./heapexample
+(gdb) run $(./program.3)
+```
+![image](https://github.com/user-attachments/assets/4c45454c-09ab-4534-9946-2ea11bf6a6d5)
+
+También vemos lo que sucede con los registros:
+```
+info registers
+```
+![image](https://github.com/user-attachments/assets/38a0f883-0836-4244-b485-4b103762555c)
+
+
+
+
+
+
+
