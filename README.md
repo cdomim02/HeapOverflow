@@ -58,8 +58,32 @@ Tras esto, vamos a lanzar el comando
 ```
 info proc map
 ```
-Que 
+Que nos muestra información sobre el proceso en ejecución. En concreto busacamos ver como se está organizando la memoria:
 ![image](https://github.com/user-attachments/assets/cba2b7e9-10ed-4910-a753-1099d54a5bcf)
+
+En concreto, buscamos analizar el estado del heap, que en mi caso se encuentra entre las siguientes direcciones de memoria
+```
+Start Addr         End Addr    Size           Offset objfile
+0x405000           0x426000    0x21000        0x0 [heap]
+```
+Ahora vamos a mostrar en detalle el contenido de esta zona de memoria, para ello ejecutamos:
+```
+x/120x 0x405000 
+```
+Donde el primer argumento expresa cuantas direcciones vamos a analizar y el segundo desde que posición lo haremos:
+![image](https://github.com/user-attachments/assets/7c62b78d-ea3e-4ed1-bda8-f2f4a869f2de)
+
+Aquí deberiamos buscar la cadena que hemos introducido "XXXX" que en hexadecimal sería "0x58585858", pero no la vemos.
+Entonces vamos a aumentar el tamaño de direcciones que checkeamos:
+```
+x/240x 0x405000 
+```
+Con resultado: 
+![image](https://github.com/user-attachments/assets/47d34e3b-5f8e-4d77-a450-71df0be9c8f7)
+
+Donde ya podemos ver la cadena que buscabamos, así como la posición en la que comienza la función espera_fuera:
+![image](https://github.com/user-attachments/assets/0f8903e0-2118-46a6-977b-e7b2bc6b40cf)
+
 
 
 
