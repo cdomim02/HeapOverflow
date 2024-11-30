@@ -84,8 +84,51 @@ Con resultado:
 Donde ya podemos ver la cadena que buscabamos, así como la posición en la que comienza la función espera_fuera:
 ![image](https://github.com/user-attachments/assets/0f8903e0-2118-46a6-977b-e7b2bc6b40cf)
 
+Para ubicar mejor donde empieza la función usaremos:
+```
+disass fesperofuera
+```
+![image](https://github.com/user-attachments/assets/134b4512-1d89-4c09-b03b-1ecde7b49cdc)
 
+Ahora que tenemos la información que buscabamos ya podemos salir del debbuger con 
+```
+q
+```
 
+Ahora vamos a ejecutar un pequeño programa de python que nos deje analizar el comportamiento de la memoria ante un desbordamiento:
+```
+program.1:
+#!/usr/bin/python3
+print('X' * 90)
+```
 
+Antes de nada vamos a darle permisos y probar que funciona como es debido:
+![image](https://github.com/user-attachments/assets/a91a2aab-a6de-4803-b5e0-0f7f9c9358ea)
 
+Una vez vemos que funciona vamos a ejecutarlo para que nos de la entrada esperada de nuestro código vulnerable:
+```
+./heapexample $(./pp1)
+```
+Donde nuevamente vemos que hay un problema por desbordamiento:
+![image](https://github.com/user-attachments/assets/5129e284-6665-4e61-b118-577ce1e6ff00)
+
+Ahora veamos dentro de gdb que esta sucediendo (ejecutamos todos los pasos anteriores hasta justo antes de hacer run XXXX) ejecutando 
+```
+run $(program.1)
+```
+![image](https://github.com/user-attachments/assets/d2586fc4-f675-4c9f-976e-a9986cb3b47a)
+
+Vemos el problema de segmentation fault pero con más detalle.
+
+¿Y como podríamos aprovechar esto?
+
+Para ellos, vamos a volver a ver como se organiza el heap:
+![image](https://github.com/user-attachments/assets/0d91f6a3-bfa4-4d16-bf19-cb0283f072f9)
+
+Donde vemos que el número máximo de carácteres que podemos insertar es 
+```
+0x4052f0 (donde empieza fesperofuera) - 0x4052a0 (donde empieza el buffer) = 80
+```
+
+Por tanto, vamos a ver que pasa 
 
